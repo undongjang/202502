@@ -1,38 +1,100 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
   <head>
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>PlayGround</title>
-      <link
-        rel="stylesheet"
-        href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-      <link rel="stylesheet" href="./style.css" />
-    </head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PlayGround</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper/swiper-bundle.min.css" />
   </head>
   <body>
-    <div class="playground-pc-frame">
-      <div class="book-container">
-        <div id="book"></div>
-      </div>
-      <div class="controls">
-        <button id="prevBtn">이전</button>
-        <button id="nextBtn">다음</button>
-      </div>
-    </div>
-
     <div class="playground-mobile-frame">
       <div class="swiper-container">
-        <div class="swiper-wrapper" id="book_mobile">
+        <div class="swiper-wrapper" id="book">
           <!-- 이미지 위치 -->
         </div>
+        <!-- Add Pagination -->
+        <!-- <div class="swiper-pagination"></div> -->
+        <!-- Add Navigation -->
+        <!-- <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div> -->
       </div>
       <div class="pageNumber" id="pageNumber"></div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/3/turn.min.js"></script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-    <script src="./script.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var swiper = new Swiper(".swiper-container", {
+          loop: false,
+          pagination: {
+            el: ".swiper-pagination",
+          },
+          on: {
+            slideChange: function () {
+              currentPage = swiper.realIndex + 1;
+              pageNumber.innerText = `${currentPage} / ${totalPages}`;
+            },
+          },
+        });
+      });
+
+      // let pageNumber = document.getElementById("pageNumber");
+      // pageNumber.innerText = `1 / ${totalPages}`;
+      // let currentPage = 1;
+
+      let totalPages = 104;
+      let book = document.getElementById("book");
+      for (let i = 1; i <= totalPages; i++) {
+        let imageElement = document.createElement("div");
+        imageElement.classList.add("swiper-slide");
+        imageElement.style.backgroundImage = `url('./images/page${i}.png')`;
+        book.appendChild(imageElement);
+      }
+
+      let pageNumber = document.getElementById("pageNumber");
+      pageNumber.innerText = `1 / ${totalPages}`;
+      let currentPage = 1;
+    </script>
   </body>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+    .playground-mobile-frame {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .swiper-container {
+      /* 1.4841; 세로:가로 비율 */
+      width: 100vw;
+      height: 148.41vw;
+    }
+
+    .swiper-slide {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      color: #fff;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .pageNumber {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 15px;
+    }
+  </style>
 </html>
